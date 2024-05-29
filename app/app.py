@@ -7,6 +7,7 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 
 app = Flask(__name__)
 
+#BASE DE DATOS/CLAVE
 app.config['SECRET_KEY'] = 'miclavesecreta'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///usuario.db'
 
@@ -15,7 +16,7 @@ bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'usuarios'
 
-# Modelo
+# MODELO USUARIO
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
 
@@ -32,6 +33,7 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return bcrypt.check_password_hash(self.password_hash, password)
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
@@ -39,6 +41,7 @@ def load_user(user_id):
 with app.app_context():
     db.create_all()
 
+#RUTAS
 @app.route('/')
 def index():
     return render_template('index.html')
