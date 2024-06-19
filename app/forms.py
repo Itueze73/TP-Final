@@ -16,5 +16,7 @@ class RegisterForm(FlaskForm):
     email = EmailField('Correo', validators=[DataRequired(), Email()])
     password = PasswordField('Contraseña', validators=[DataRequired()])
     confirm_password = PasswordField('Repetir Contraseña', 
-                                     validators=[DataRequired(), EqualTo('password', message='Las contraseñas deben coincidir')])
+                                     validators=[DataRequired(), 
+                                                 EqualTo('password', 
+                                                         message='Las contraseñas deben coincidir')])
     submit = SubmitField('Registrarse')
